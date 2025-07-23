@@ -1,3 +1,5 @@
+README NOT UPDATED YET, PLEASE WAIT!!!
+
 # SteamVR-ForceCompositorScale
 Resets the GpuSpeed settings to match the custom super sample scale.
 
