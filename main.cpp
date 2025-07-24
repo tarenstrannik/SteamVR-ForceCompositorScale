@@ -209,7 +209,7 @@ int GetCalculatedGPUHorsepower()
     LogMessage("Recommended render target size: " + std::to_string(renderWidth) + "x" + std::to_string(renderHeight));
  
     float customSSCoeficient = vr::VRSettings()->GetFloat(kSectionSteamVR, kKeyScaleOverrideValue);
-    LogReadValue(kSectionSteamVR, kKeyScaleOverrideValue, std::to_string(ssCoeficient), "float");
+    LogReadValue(kSectionSteamVR, kKeyScaleOverrideValue, std::to_string(customSSCoeficient), "float");
     
     if(customSSCoeficient == 0.0f)
     {
