@@ -201,6 +201,19 @@ int GetCalculatedGPUHorsepower()
         return static_cast<int>(result);
     }
 
+    if(widthFromConfig == 0 && heightFromConfig == 0)
+    {
+        LogMessage("Width and height not set. Using recomended render target size");
+    }
+    else if(heightFromConfig == 0)
+    {
+        LogMessage("Height not set. Using recomended render target size");
+    }
+    else if(widthFromConfig == 0)
+    {
+        LogMessage("Width not set. Using recomended render target size");
+    }
+
     uint32_t w = 0, h = 0;
     vr::VRSystem()->GetRecommendedRenderTargetSize(&w, &h);
 
