@@ -217,8 +217,17 @@ int GetCalculatedGPUHorsepower()
     {
         int intScale = vr::VRSettings()->GetInt32(kSectionSteamVR, kKeySteamVRGeneralResolutionScale);
         LogReadValue(kSectionSteamVR, kKeySteamVRGeneralResolutionScale, std::to_string(intScale), "int32");
+        if(intScale == 0)
+        {
+            intScale=100;
+            LogMessage("General resolution scale not set. Using: 100%");
+        }
+        else
+        {
+            LogMessage("Using general resolution scale: " + std::to_string(intScale) + "%");
+        }
         ssCoeficient = static_cast<float>(intScale) / 100.0f;
-        LogMessage("Using general resolution scale: " + std::to_string(intScale) + "% (coefficient: " + std::to_string(ssCoeficient) + ")");
+        LogMessage("Using scale coefficient: " + std::to_string(ssCoeficient));
     }
     else
     {
