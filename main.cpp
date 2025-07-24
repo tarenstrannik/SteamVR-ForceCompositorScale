@@ -263,6 +263,17 @@ void InitializeLogging()
         logPath += ".log";
     }
     
+    const long maxLogSize = 1024 * 1024; // 1 MB
+    std::ifstream checkFile(logPath, std::ios::ate | std::ios::binary);
+    if (checkFile.is_open()) {
+        long fileSize = checkFile.tellg();
+        checkFile.close();
+        
+        if (fileSize > maxLogSize) {
+            remove(logPath.c_str());
+        }
+    }
+
     g_logFile.open(logPath, std::ios::app);
     if (g_logFile.is_open()) {
         time_t now = time(0);
