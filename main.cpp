@@ -34,8 +34,6 @@ const char* kGpuSpeedKeyFormat = "gpuSpeed%d";
 const char* kKeyHorsepower        = "gpuSpeedHorsepower";
 const char* kKeyRenderTargetScale = "gpuSpeedRenderTargetScale";
 
-const char* kKeySteamVRGeneralResolutionScale = "resolutionScale";
-
 constexpr float kHorsepowerNormalizedCoeficient = 1.784970906023052f;
 constexpr int kHorsepowerNormalizationCoeficient = 1000000;
 
@@ -210,41 +208,30 @@ int GetCalculatedGPUHorsepower()
     int renderHeight = static_cast<int>(h);
     LogMessage("Recommended render target size: " + std::to_string(renderWidth) + "x" + std::to_string(renderHeight));
  
-    float ssCoeficient = vr::VRSettings()->GetFloat(kSectionSteamVR, kKeyScaleOverrideValue);
+    float customSSCoeficient = vr::VRSettings()->GetFloat(kSectionSteamVR, kKeyScaleOverrideValue);
     LogReadValue(kSectionSteamVR, kKeyScaleOverrideValue, std::to_string(ssCoeficient), "float");
     
-    if(ssCoeficient == 0.0f)
+    if(customSSCoeficient == 0.0f)
     {
-        int intScale = vr::VRSettings()->GetInt32(kSectionSteamVR, kKeySteamVRGeneralResolutionScale);
-        LogReadValue(kSectionSteamVR, kKeySteamVRGeneralResolutionScale, std::to_string(intScale), "int32");
-        if(intScale == 0)
-        {
-            intScale=100;
-            LogMessage("General resolution scale not set. Using: 100%");
-        }
-        else
-        {
-            LogMessage("Using general resolution scale: " + std::to_string(intScale) + "%");
-        }
-        ssCoeficient = static_cast<float>(intScale) / 100.0f;
-        LogMessage("Using scale coefficient: " + std::to_string(ssCoeficient));
+        customSSCoeficient= 1.0f;
+        LogMessage("Custom resolution scale not set. Using general steam VR resolution");
     }
     else
     {
-        LogMessage("Using scale override coefficient: " + std::to_string(ssCoeficient));
+        LogMessage("Using scale override coefficient: " + std::to_string(customSSCoeficient));
     }
 
     double result = static_cast<double>(renderWidth) *
                     static_cast<double>(renderHeight) *
                     static_cast<double>(hmdHz) *
                     static_cast<double>(gpuHorsepowerCoeficient) *
-                    static_cast<double>(ssCoeficient);
+                    static_cast<double>(customSSCoeficient);
 
     result /= static_cast<double>(kHorsepowerNormalizationCoeficient);
     
     LogMessage("Final calculation: " + std::to_string(renderWidth) + " * " + std::to_string(renderHeight) + 
                " * " + std::to_string(hmdHz) + " * " + std::to_string(gpuHorsepowerCoeficient) + 
-               " * " + std::to_string(ssCoeficient) + " / " + std::to_string(kHorsepowerNormalizationCoeficient) + 
+               " * " + std::to_string(customSSCoeficient) + " / " + std::to_string(kHorsepowerNormalizationCoeficient) + 
                " = " + std::to_string(result));
 
     return static_cast<int>(result);
