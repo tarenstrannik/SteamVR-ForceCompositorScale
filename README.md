@@ -34,11 +34,14 @@ This tool overwrites GpuSpeed settings in steamvr.vrsettings with value, calcula
    }
 ```
 
-value 0 effectively means that tool is disabled. To enable it set int value from 30 to 225 (these are Steam VR limits) (set 100 to force compositor work on 100% SS resolution)
+value 0 effectively means that tool is disabled. To enable it set int value up to 225 (these are Steam VR limits) (set 100 to force compositor work on 100% SS resolution)
 Value represents at which SS in % relatively to base HMD resolution composer will work. 
 In the same manner as you can set manual SS override for the Steam VR in general or per app. And value exactly matches values in Steam VR settings in meaning of acting resolution.
 
 So, for example, if you've set general steam VR SS (or some app SS) to 150% and want composer run at exactly the same resolution - you need set compositorResolutionSSOverrideValue to 150.
+
+!!! Important !!! Values below 100% can work not as supposed, as composer has it's lower limit, but it depends on base resolution. For example, when using "Potato" mode in VD - lower compositor's resolution limit will be 1436*1532 - or about 100% of base resolution. and even setting horsepowers to extremely low values doesnt' change this.
+And in Godlike mode lower limit is 1684*1764 or 30% of base resolution.
 
 3. After setting necessary value - 
 - (If Steam VR was open - close it)
