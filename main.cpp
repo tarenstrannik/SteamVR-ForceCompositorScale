@@ -93,12 +93,9 @@ int main()
         return 0;
     }
 
-   if(compositorScale<30)
+    if(compositorScale<100)
     {
-        compositorScale = 30;
-        LogMessage("Compositor scale can not be less then 30%! Setting it to minimum possible value");
-        vr::VRSettings()->SetInt32(kSectionSteamVR, kKeyCompositorScaleOverrideValue, compositorScale);
-        LogWriteValue(kSectionSteamVR, kKeyCompositorScaleOverrideValue, std::to_string(compositorScale), "int32");
+        LogMessage("Compositor scale is less then 100%! Depending on your HMD and use mode compositor value may not match those ou've set");
     }
 
     if(compositorScale>225)
